@@ -21,7 +21,7 @@ if (isset($_GET['alerta'])) {
 <div class="container">
     <form action="proceso_nuevo_ingreso.php" class="form-horizontal" method="post">    
             <h2>Tabule los datos del ingreso</h2>
-            
+            <input type="hidden" name="tipo" value="normal"/>
             <div class="form-group">
                     <label>Descripción del ingreso</label>
                     <input class="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción del ingreso aquí." rows="0"></input>
@@ -55,12 +55,12 @@ if (isset($_GET['alerta'])) {
     </form>
 </div>
 <div class="container">
-    <form action="proceso_nuevo_ingreso_leche.php" class="form-horizontal" method="post">    
+    <form action="proceso_nuevo_ingreso.php" class="form-horizontal" method="post">    
             <h2>Venta de leche</h2>
-            
+            <input type="hidden" name="tipo" value="leche"/>
             <div class="form-group">
                 <label>Fecha de corte semanal</label>
-                <input class="datepicker" id="fecha_leche" name="fecha_leche" type="text" value=
+                <input class="datepicker" id="fecha" name="fecha" type="text" value=
                 <?php
                     $hoy = getdate();
                     echo '"'.$hoy['year'].'-';
@@ -77,11 +77,11 @@ if (isset($_GET['alerta'])) {
                 
             <div class="form-group">
                     <label>Cantidad de litros vendidos en la semana</label>
-                    <input class="text" id="cantidad_leche" name="cantidad_leche" placeholder="Ingrese litros vendidos en la semana aquí." rows="1"></input>
+                    <input class="number" id="cantidad_leche" name="cantidad_leche" placeholder="Ingrese litros vendidos en la semana aquí." rows="1"></input>
             </div>
             <div class="form-group">
                     <label>Precio por litro de leche en la semana</label>
-                    <input class="text" id="precio_leche" name="precio_leche" placeholder="Ingrese el precio por litro de leche de la semana aquí." rows="1"></input>
+                    <input class="number" id="precio_leche" name="precio_leche" placeholder="Ingrese el precio por litro de leche de la semana aquí." rows="1"></input>
             </div>
 
             <div class="form-group">
