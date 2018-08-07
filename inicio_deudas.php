@@ -62,3 +62,38 @@ if (isset($_GET['alerta'])) {
             </div>
     </form>
 </div>
+
+<?php
+include_once "./class/class_conexion.php";
+$conexion = new Conexion();
+$sql = 'SELECT * FROM `tbl_deudas` WHERE `CANTIDAD`-`CANT_PAGADA`<>0';
+$sql2 = 'SELECT * FROM `tbl_deudas` WHERE `CANTIDAD`-`CANT_PAGADA`=0';
+$res = $conexion->ejecutarConsulta($sql);
+if(!$res){
+    header('Location: inicio.php?pag=deudas&error=10');
+    $conexion->cerrarConexion();
+    exit();
+}
+?>
+<div class="container">  
+    <h2>Deudas pendientes</h2>
+    <?php
+        while ($fila = $res->fetch_assoc()) {
+            echo '<p class="desc">Descripcion: '.$fila['DESCRIPCION'].' Fecha: '.$fila['FECHA'].' Cantidad: '. $fila['CANTIDAD'].' Cantidad pagada: '. $fila['CANT_PAGADA'].' Acreedor: '. $fila['ACREEDOR'].'</p>';
+        }
+    ?>
+</div>
+<div class="container">  
+    <h2>Deudas saldadas</h2>
+    <?php
+        $res = $conexion->ejecutarConsulta($sql2);
+        if(!$res){
+            header('Location: inicio.php?pag=deudas&error=10');
+            $conexion->cerrarConexion();
+            exit();
+        }
+        while ($fila = $res->fetch_assoc()) {
+            echo '<p class="desc">Descripcion: '.$fila['DESCRIPCION'].' Fecha: '.$fila['FECHA'].' Cantidad: '. $fila['CANTIDAD'].' Cantidad pagada: '. $fila['CANT_PAGADA'].' Acreedor: '. $fila['ACREEDOR'].'</p>';
+        }
+    ?>
+</div>
