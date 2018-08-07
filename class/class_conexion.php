@@ -11,9 +11,6 @@
 		}
 		public function establecerConexion(){
 			$this->con = mysqli_connect($this->server, $this->usuario, $this->contrasena, $this->db);
-			if ($con->connect_error) {
-			    die("Connection failed: " . $conn->connect_error);
-			} 
 		}
 		public function ejecutarConsulta($sql){//"CALL PROCEDIMIENTO(PARAMETROS)" para SPs
 			$mysqli = $this->con;

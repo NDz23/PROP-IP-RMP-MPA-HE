@@ -28,6 +28,9 @@
             case '3':
                 echo '<div class="alert alert-danger"><strong>¡Error!</strong> Acceso restringido.</div>';
                 break;
+            case '10':
+                echo '<div class="alert alert-danger"><strong>¡Error!</strong> No se pudo conectar a la base de datos para verificar acceso.</div>';
+                break;
             default:
                  break;
         }                
