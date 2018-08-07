@@ -1,5 +1,6 @@
 <?php
 include_once "./class/class_sesion.php";
+include_once "./class/class_conexion.php";
     Sesion::crearSesion();
     Sesion::setId();
 $tipo = filter_input(INPUT_POST, 'tipo');
@@ -32,13 +33,13 @@ if ($tipo === 'leche') {
 	    exit();
 	}
 }
-echo "Tipo: ".$tipo;
-echo "Fecha: ".$fecha;
-echo "Descripcion: ".$descripcion;
-echo "Cantidad: ".$cantidad;
-echo "Cantidad leche: ".$cant_leche;
-echo "Precio leche: ".$precio_leche;
-
-//INSERTAR A DB
+$conexion = new Conexion();
+$sql="CALL SP_INSERTAR_INGRESO('".$descripcion."','".$fecha."',".$cantidad.")";
+if(!$conexion->ejecutarConsulta($sql)){
+	header('Location: inicio.php?pag=ingresos&alerta=10');
+	$conexion->cerrarConexion();
+	exit();
+}
+$conexion->cerrarConexion();
 header('Location: inicio.php?pag=ingresos&alerta=3');
 ?>

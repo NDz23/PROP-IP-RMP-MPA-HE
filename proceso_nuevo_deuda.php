@@ -1,5 +1,6 @@
 <?php
 include_once "./class/class_sesion.php";
+include_once "./class/class_conexion.php";
     Sesion::crearSesion();
     Sesion::setId();
 
@@ -15,8 +16,13 @@ if ($descripcion === '' || $cantidad === '' || $acreedor === '' || $cantidad_pag
 	header('Location: inicio.php?pag=deudas&alerta=2');
     exit();
 }
-
-//INSERTAR DEUDA A LA BASE DE DATOS
-
+$conexion = new Conexion();
+$sql="CALL SP_INSERTAR_DEUDA('".$descripcion."','".$fecha."',".$cantidad.",".$cantidad_paga.",'".$acreedor."')";
+if(!$conexion->ejecutarConsulta($sql)){
+	header('Location: inicio.php?pag=deudas&alerta=10');
+	$conexion->cerrarConexion();
+	exit();
+}
+$conexion->cerrarConexion();
 header('Location: inicio.php?pag=deudas&alerta=3');
 ?>

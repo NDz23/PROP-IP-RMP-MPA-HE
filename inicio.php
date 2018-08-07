@@ -65,5 +65,6 @@
         include 'inicio_ayuda.php';
     }
 ?>
+<footer class="footer footer-copyright text-center py-3">© 2018 Por: Nelson Díaz y Fabricio Murillo</footer>
 </body>
 </html>

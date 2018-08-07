@@ -7,7 +7,7 @@ if (empty($_POST)) {
 
 $user = filter_input(INPUT_POST, 'user');
 $password = filter_input(INPUT_POST, 'password'); 
-$usuario="habib";
+$usuario="Habib";
 $con="1234";
     if ($usuario === $user) {
         if ($con === $password) {

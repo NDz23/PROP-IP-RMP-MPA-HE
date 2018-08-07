@@ -1,5 +1,6 @@
 <?php
 include_once "./class/class_sesion.php";
+include_once "./class/class_conexion.php";
     Sesion::crearSesion();
     Sesion::setId();
 
@@ -13,8 +14,13 @@ if ($descripcion === '' || $cantidad === '') {
 	header('Location: inicio.php?pag=gastos&alerta=2');
     exit();
 }
-
-//INSERTAR GASTO A LA BASE DE DATOS
-
+$conexion = new Conexion();
+$sql="CALL SP_INSERTAR_GASTO('".$descripcion."','".$fecha."',".$cantidad.")";
+if(!$conexion->ejecutarConsulta($sql)){
+	header('Location: inicio.php?pag=gastos&alerta=10');
+	$conexion->cerrarConexion();
+	exit();
+}
+$conexion->cerrarConexion();
 header('Location: inicio.php?pag=gastos&alerta=3');
 ?>
