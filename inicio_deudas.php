@@ -66,7 +66,7 @@ if (isset($_GET['alerta'])) {
 <?php
 include_once "./class/class_conexion.php";
 $conexion = new Conexion();
-$sql = 'SELECT * FROM `tbl_deudas` WHERE `CANTIDAD`-`CANT_PAGADA`<>0';
+$sql = 'SELECT * FROM `tbl_deudas` WHERE `CANTIDAD`>`CANT_PAGADA`';
 $sql2 = 'SELECT * FROM `tbl_deudas` WHERE `CANTIDAD`-`CANT_PAGADA`=0';
 $res = $conexion->ejecutarConsulta($sql);
 if(!$res){
@@ -77,14 +77,39 @@ if(!$res){
 ?>
 <div class="container">  
     <h2>Deudas pendientes</h2>
-    <?php
+    <table class="table">
+	  <thead>
+	    <tr>
+	      <th class="desc">Descripción</th>
+	      <th class="desc">Fecha</th>
+	      <th class="desc">Cantidad</th>
+	      <th class="desc">Cantidad pagada</th>
+	      <th class="desc">Acreedor</th>
+	      <th class="desc">Editar</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  	<?php
         while ($fila = $res->fetch_assoc()) {
-            echo '<p class="desc">Descripcion: '.$fila['DESCRIPCION'].' Fecha: '.$fila['FECHA'].' Cantidad: '. $fila['CANTIDAD'].' Cantidad pagada: '. $fila['CANT_PAGADA'].' Acreedor: '. $fila['ACREEDOR'].'</p>';
+            echo '<tr scope="row"><form action="proceso_pago_deuda.php" method="post"><td class="desc">'.$fila['DESCRIPCION'].'</td><td class="desc">'.$fila['FECHA'].'</td><td class="desc">'. $fila['CANTIDAD'].'</td><td class="desc"><input class="text" id="cant" name="cant" placeholder="'. $fila['CANT_PAGADA'].'" rows="0"></input></td><td class="desc">'. $fila['ACREEDOR'].'</td><td class="desc"><input type="hidden" name="id" value="'.$fila['ID_DEUDA'].'"/><button type="submit" class="button">Editar</button></td></form></tr>';
         }
-    ?>
+    	?>
+	  </tbody>
+	</table>
 </div>
 <div class="container">  
     <h2>Deudas saldadas</h2>
+    <table class="table">
+	  <thead>
+	    <tr>
+	      <th class="desc">Descripción</th>
+	      <th class="desc">Fecha</th>
+	      <th class="desc">Cantidad</th>
+	      <th class="desc">Cantidad pagada</th>
+	      <th class="desc">Acreedor</th>
+	    </tr>
+	  </thead>
+	  <tbody>
     <?php
         $res = $conexion->ejecutarConsulta($sql2);
         if(!$res){
@@ -93,7 +118,9 @@ if(!$res){
             exit();
         }
         while ($fila = $res->fetch_assoc()) {
-            echo '<p class="desc">Descripcion: '.$fila['DESCRIPCION'].' Fecha: '.$fila['FECHA'].' Cantidad: '. $fila['CANTIDAD'].' Cantidad pagada: '. $fila['CANT_PAGADA'].' Acreedor: '. $fila['ACREEDOR'].'</p>';
+            echo '<tr scope="row"><td class="desc">'.$fila['DESCRIPCION'].'</td><td class="desc">'.$fila['FECHA'].'</td><td class="desc">Lps. '. $fila['CANTIDAD'].'</td><td class="desc">Lps. '. $fila['CANT_PAGADA'].'</td><td class="desc">'. $fila['ACREEDOR'].'</td></tr>';
         }
     ?>
+      </tbody>
+	</table>
 </div>

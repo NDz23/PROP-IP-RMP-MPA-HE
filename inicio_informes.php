@@ -52,7 +52,7 @@
 		                    <label for="fecha">Seleccione la semana de la que desea ver los informes</label>
 		                    <select class="form-control" id="fecha" name="fecha">
 		                    	<?php
-		                    		$sql = "SELECT `FECHA` FROM `tbl_ingresos` GROUP BY `FECHA`";
+		                    		$sql = "SELECT `FECHA` FROM `tbl_ingresos` GROUP BY `FECHA` DESC";
 		                    		$res = $conexion->ejecutarConsulta($sql);
 									if(!$res){
 										header('Location: inicio.php?pag=informes&error=10');
@@ -81,7 +81,7 @@
 		                    <label for="fecha">Seleccione el mes del que desea ver los informes</label>
 		                    <select class="form-control" id="fecha" name="fecha">
 		                    	<?php
-		                    		$sql = "SELECT YEAR(`FECHA`) AS 'ANIO', MONTH(`FECHA`) AS 'MES' FROM `tbl_ingresos` GROUP BY ANIO, MES";
+		                    		$sql = "SELECT YEAR(`FECHA`) AS 'ANIO', MONTH(`FECHA`) AS 'MES' FROM `tbl_ingresos` GROUP BY ANIO, MES DESC";
 		                    		$res = $conexion->ejecutarConsulta($sql);
 									if(!$res){
 										header('Location: inicio.php?pag=informes&error=10');
@@ -111,7 +111,7 @@
 		                    <label for="fecha">Seleccione el año del que desea ver los informes</label>
 		                    <select class="form-control" id="fecha" name="fecha">
 		                    	<?php
-		                    		$sql = "SELECT YEAR(`FECHA`) AS 'ANIO' FROM `tbl_ingresos` GROUP BY ANIO";
+		                    		$sql = "SELECT YEAR(`FECHA`) AS 'ANIO' FROM `tbl_ingresos` GROUP BY ANIO DESC";
 		                    		$res = $conexion->ejecutarConsulta($sql);
 									if(!$res){
 										header('Location: inicio.php?pag=informes&error=10');
@@ -147,47 +147,96 @@
 	    		$sql2 = "SELECT * FROM `tbl_gastos` WHERE YEAR(`FECHA`)=YEAR(STR_TO_DATE('".$fecha."', '%Y-%m-%d'))";
 	    	}
 	    	?>
-		    	<div class="container">
-	                <h2>Informes</h2>
-	                <div class="form-group">
-	                    <h3>Informe 
-	                    	<?php
-	                    		echo $per.' ('.$fecha.')';
-	                    	?>
-	                    </h3>
-                    	<?php
-                    		$res = $conexion->ejecutarConsulta($sql);
-                    		$totalIngresos = 0;
-                    		$totalGastos = 0;
-                    		$superavit = 0;
-							if(!$res){
-								header('Location: inicio.php?pag=informes&error=10');
-								$conexion->cerrarConexion();
-								exit();
-							}
-							echo '<p class="desc">INGRESOS: </p>';
-							while ($fila = $res->fetch_assoc()) {
-								$totalIngresos += $fila['CANTIDAD'];
-								$superavit += $fila['CANTIDAD'];
-							    echo '<p class="desc">Descripcion: '.$fila['DESCRIPCION'].' Fecha: '.$fila['FECHA'].' Cantidad: '. $fila['CANTIDAD'].'</p>';
-							}
-							$res = $conexion->ejecutarConsulta($sql2);
-							if(!$res){
-								header('Location: inicio.php?pag=informes&error=10');
-								$conexion->cerrarConexion();
-								exit();
-							}
-							echo '<p class="desc">GASTOS: </p>';
-							while ($fila = $res->fetch_assoc()) {
-								$totalGastos += $fila['CANTIDAD'];
-								$superavit -= $fila['CANTIDAD'];
-							    echo '<p class="desc">Descripcion: '.$fila['DESCRIPCION'].' Fecha: '.$fila['FECHA'].' Cantidad: '. $fila['CANTIDAD'].'</p>';
-							}
-							echo '<p class="desc">Ingresos: '.$totalIngresos." Gastos:".$totalGastos."</p>";
-							echo '<p class="desc">Superávit: '.$superavit."</p>";
-                    	?>
-	                </div>
-		        </div>
+	    	<div class="container">  
+			    <h2>Informes</h2>
+                <h3>Informe 
+                	<?php
+                		echo $per.' ('.$fecha.')';
+                	?>
+                </h3>
+            </div>
+            <div class="container">
+            	<h2>Ingresos</h2>
+			    <table class="table">
+				  <thead>
+				    <tr scope="row">
+				      <th class="desc">Descripción</th>
+				      <th class="desc">Fecha</th>
+				      <th class="desc">Cantidad</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	<?php
+				  	$res = $conexion->ejecutarConsulta($sql);
+            		$totalIngresos = 0;
+            		$totalGastos = 0;
+            		$superavit = 0;
+					if(!$res){
+						header('Location: inicio.php?pag=informes&error=10');
+						$conexion->cerrarConexion();
+						exit();
+					}
+			        while ($fila = $res->fetch_assoc()) {
+			        	$totalIngresos += $fila['CANTIDAD'];
+			        	$superavit += $fila['CANTIDAD'];
+			            echo '<tr scope="row"><td class="desc">'.$fila['DESCRIPCION'].'</td><td class="desc">'.$fila['FECHA'].'</td><td class="desc">Lps. '. $fila['CANTIDAD'].'</td></tr>';
+			        }
+			    	?>
+			    	<tr scope="row">
+				      <td class="desc" colspan="2">Ingresos totales</td>
+				      <td class="desc">
+				      	<?php
+                			echo "Lps. ".$totalIngresos;
+                		?>
+				      </td>
+				    </tr>
+				  </tbody>
+				</table>
+			</div>
+			<div class="container">
+				<h2>Gastos</h2>
+				<table class="table">
+				  <thead>
+				    <tr scope="row">
+				      <th class="desc">Descripción</th>
+				      <th class="desc">Fecha</th>
+				      <th class="desc">Cantidad</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	<?php
+				  	$res = $conexion->ejecutarConsulta($sql2);
+					if(!$res){
+						header('Location: inicio.php?pag=informes&error=10');
+						$conexion->cerrarConexion();
+						exit();
+					}
+			        while ($fila = $res->fetch_assoc()) {
+			        	$totalGastos += $fila['CANTIDAD'];
+			        	$superavit -= $fila['CANTIDAD'];
+			            echo '<tr scope="row"><td class="desc">'.$fila['DESCRIPCION'].'</td><td class="desc">'.$fila['FECHA'].'</td><td class="desc">Lps. '. $fila['CANTIDAD'].'</td></tr>';
+			        
+			        }
+			    	?>
+			    	<tr scope="row">
+				      <td class="desc" colspan="2">Gastos totales</td>
+				      <td class="desc">
+				      	<?php
+                			echo "Lps. ".$totalGastos;
+                		?>
+				      </td>
+				    </tr>
+				  </tbody>
+				</table>
+			</div>
+			<div class="container">
+				<h2>Superávit</h2>
+				<p class="desc">Superávit 
+					<?php
+            			echo $per.": Lps. ".$superavit;
+            		?>
+				</p>
+			</div>
 	        <?php
     	}
     	$conexion->cerrarConexion();
