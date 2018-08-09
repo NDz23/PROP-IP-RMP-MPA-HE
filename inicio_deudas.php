@@ -23,15 +23,21 @@ if (isset($_GET['alerta'])) {
     <div class="row">
         <div class="col-lg-12 col-ms-12 col-sm-12 col-xs-12">
             <p style="color:#ffffff">Seleccione una opción</p>
-            <select class="form-control">
+            <select class="form-control" id="slcDeuda" name="slcDeuda">
               <option>Seleccione</option>
+              <option id="slcNuevaDeuda" name="slcNuevaDeuda" onclick="mostrarNuevaDeuda()">Agregar nueva deuda</option>
+              <option id="slcVerDeuda" name="slcVerDeuda" onclick="mostrarVerDeuda()">Ver deudas pendientes</option>
+              <option id="slcDeudaSaldada" name="slcDeudaSaldada" onclick="mostrarDeudaSaldada()">Ver deudas saldadas</option>
             </select>
         </div>
     </div>
 </div>
 
-<div class="container">
+<div id="divCuerpo" name="divCuerpo">
 
+</div>
+
+<div class="container" id="divNuevaDeuda" name="divNuevaDeuda" style='display:none;'>
     <form action="proceso_nuevo_deuda.php" class="form-horizontal" method="post">    
             <h2>Tabule los datos de la deuda</h2>
             
@@ -88,7 +94,7 @@ if(!$res){
     exit();
 }
 ?>
-<div class="container">  
+<div class="container" id="divVerDeuda" name="divVerDeuda" style='display:none;'>  
     <h2>Deudas pendientes</h2>
     <table class="table">
 	  <thead>
@@ -110,7 +116,7 @@ if(!$res){
 	  </tbody>
 	</table>
 </div>
-<div class="container">  
+<div class="container" id="divDeudaSaldada" name="divDeudaSaldada" style='display:none;'>  
     <h2>Deudas saldadas</h2>
     <table class="table">
 	  <thead>
@@ -140,5 +146,6 @@ if(!$res){
 <footer class="footer footer-copyright text-center py-3">© 2018 Por: Nelson Díaz y Fabricio Murillo</footer>
   <script src='js/jquery.min.js'></script>
   <script src="js/index.js"></script>
+  <script src="js/deuda.js"></script>
 </body>
 </html>
