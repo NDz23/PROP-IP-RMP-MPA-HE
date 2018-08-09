@@ -18,7 +18,20 @@ if (isset($_GET['alerta'])) {
     }                
 }
 ?>
+
 <div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-ms-12 col-sm-12 col-xs-12">
+            <p style="color:#ffffff">Seleccione una opción</p>
+            <select class="form-control">
+              <option>Seleccione</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
     <form action="proceso_nuevo_deuda.php" class="form-horizontal" method="post">    
             <h2>Tabule los datos de la deuda</h2>
             
@@ -124,3 +137,8 @@ if(!$res){
       </tbody>
 	</table>
 </div>
+<footer class="footer footer-copyright text-center py-3">© 2018 Por: Nelson Díaz y Fabricio Murillo</footer>
+  <script src='js/jquery.min.js'></script>
+  <script src="js/index.js"></script>
+</body>
+</html>
