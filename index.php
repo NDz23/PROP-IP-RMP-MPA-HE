@@ -63,7 +63,7 @@
     </form>
   </div>
 </div> <!-- /form -->
-<footer class="footer footer-copyright text-center py-3">© 2018 Por: Nelson Díaz y Fabricio Murillo</footer>
+<footer class="footer footer-copyright text-center py-3">© 2018 Por: Nelson Díaz y Fabricio Murillo v1.0r1</footer>
   <script src='js/jquery.min.js'></script>
   <script src="js/index.js"></script>
 </body>

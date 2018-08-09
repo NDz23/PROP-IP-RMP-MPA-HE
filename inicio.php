@@ -33,8 +33,8 @@
   <a class="active" href="?pag=inicio">IP-RMP-MPA-HE</a>
   <a href="?pag=ingresos">Ingresos</a>
   <a href="?pag=gastos">Gastos</a>
-  <a href="?pag=deudas">Deudas</a>
   <a href="?pag=informes">Informes</a>
+  <a href="?pag=deudas">Deudas</a> 
   <a href="?pag=salir">Salir</a>
 </div>
 
@@ -65,6 +65,6 @@
         include 'inicio_ayuda.php';
     }
 ?>
-<footer class="footer footer-copyright text-center py-3">© 2018 Por: Nelson Díaz y Fabricio Murillo</footer>
+<footer class="footer footer-copyright text-center py-3">© 2018 Por: Nelson Díaz y Fabricio Murillo v1.0r1</footer>
 </body>
 </html>

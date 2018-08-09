@@ -17,7 +17,7 @@ $user = filter_input(INPUT_POST, 'user');
 $password = filter_input(INPUT_POST, 'password'); 
 while ($fila = $res->fetch_assoc()) {
     if ($fila['NOMBRE'] === $user) {
-        if ( $fila['CONTRASENIA'] === $password) {
+        if ( password_verify($password, $fila['CONTRASENIA'])) {
             echo 'Log correcto.';
             Sesion::crearSesion();
             Sesion::setId();
