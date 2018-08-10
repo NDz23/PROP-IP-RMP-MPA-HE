@@ -17,6 +17,11 @@
 			$res = $mysqli->query($sql);
 			return $res;
 		}
+
+		public function obtenerFila($sql){
+			return mysqli_fetch_array($sql, MYSQLI_ASSOC);
+		}
+
 		public function cerrarConexion(){
 			mysqli_close($this->con);
 		}

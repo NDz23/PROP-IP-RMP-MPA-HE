@@ -99,6 +99,11 @@ if (!isset($_GET['op'])) {
             ?>
             <div class="container">  
                 <h2>Deudas pendientes</h2>
+                <form action="proceso_reporte.php" class="form-horizontal" method="post">
+                    <input class="text" type="hidden" id="op" name="op" value="0"></input>
+                    <button type="submit" class="button btn btn-default btn-lg">Imprimir Reporte</button>
+                    </button><br><br>
+                </form>
                 <table class="table">
                   <thead>
                     <tr>
